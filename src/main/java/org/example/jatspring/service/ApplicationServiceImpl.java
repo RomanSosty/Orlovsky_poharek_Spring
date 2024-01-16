@@ -12,9 +12,11 @@ import org.example.jatspring.mapper.MemberMapper;
 import org.example.jatspring.repository.ApplicationFormRepository;
 import org.example.jatspring.repository.DanceGroupRepository;
 import org.example.jatspring.repository.DanceRepository;
+import org.example.jatspring.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -23,11 +25,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationFormRepository applicationFormRepository;
     private final DanceRepository danceRepository;
     private final DanceGroupRepository danceGroupRepository;
+    private final MemberRepository memberRepository;
 
-    public ApplicationServiceImpl(ApplicationFormRepository applicationFormRepository, DanceRepository danceRepository, DanceGroupRepository danceGroupRepository) {
+    public ApplicationServiceImpl(ApplicationFormRepository applicationFormRepository, DanceRepository danceRepository, DanceGroupRepository danceGroupRepository, MemberRepository memberRepository) {
         this.applicationFormRepository = applicationFormRepository;
         this.danceRepository = danceRepository;
         this.danceGroupRepository = danceGroupRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Override
@@ -37,11 +41,19 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         request.members().stream().toList().forEach(reqMember -> {
             Member member = MemberMapper.memberToEntity(reqMember);
+            memberRepository.save(member);
             members.add(member);
         });
 
-        DanceGroup danceGroup = DanceGroupMapper.danceGroupToEtity(request);
-        danceGroupRepository.save(danceGroup);
+        DanceGroup danceGroup;
+        List<DanceGroup> danceGroups = danceGroupRepository.duplicityDanceGroup(request.groupName());
+
+        if(danceGroups.isEmpty()){
+            danceGroup = DanceGroupMapper.danceGroupToEtity(request);
+            danceGroupRepository.save(danceGroup);
+        }else{
+            danceGroup = danceGroups.get(0);
+        }
 
         Dance dance = DanceMapper.danceToEntity(request, members);
         danceRepository.save(dance);

@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface DanceGroupRepository extends JpaRepository<DanceGroup, Long> {
 
     @Query("SELECT k FROM DanceGroup k WHERE k.name = :name")
-    DanceGroup duplicityDanceGroup(@Param("name") String nameOfClub);
+    List<DanceGroup> duplicityDanceGroup(@Param("name") String nameOfClub);
 }
