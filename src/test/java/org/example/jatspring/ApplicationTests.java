@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.example.jatspring.controller.ApplicationController;
 import org.example.jatspring.dto.ApplicationDtoRequest;
 import org.example.jatspring.entity.ApplicationForm;
+import org.example.jatspring.entity.Member;
 import org.example.jatspring.service.ApplicationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 @SpringBootTest
 public class ApplicationTests {
@@ -44,5 +46,9 @@ public class ApplicationTests {
         assertEquals("Klíčov",applicationForm.getDance().getName());
         assertEquals("TKJOY", applicationForm.getDancegroup().getName());
         assertEquals(1, applicationForm.getDance().getMembers().size());
+
+        Member member = applicationForm.getDance().getMembers().stream().findFirst().orElse(null);
+        assert member != null;
+        assertEquals("Roman", member.getName() );
     }
 }
