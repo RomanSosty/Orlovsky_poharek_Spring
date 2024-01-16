@@ -6,7 +6,10 @@ import jakarta.transaction.Transactional;
 import org.example.jatspring.controller.ApplicationController;
 import org.example.jatspring.dto.ApplicationDtoRequest;
 import org.example.jatspring.entity.ApplicationForm;
+import org.example.jatspring.entity.DanceGroup;
 import org.example.jatspring.entity.Member;
+import org.example.jatspring.mapper.DanceGroupMapper;
+import org.example.jatspring.repository.DanceGroupRepository;
 import org.example.jatspring.service.ApplicationService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,8 @@ public class ApplicationTests {
 
     @Autowired
     ApplicationService applicationService;
+    @Autowired
+    DanceGroupRepository danceGroupRepository;
     @Autowired
     ApplicationController applicationController;
     @Transactional
@@ -50,5 +55,19 @@ public class ApplicationTests {
         Member member = applicationForm.getDance().getMembers().stream().findFirst().orElse(null);
         assert member != null;
         assertEquals("Roman", member.getName() );
+    }
+
+    @Transactional
+    @Test
+    void danceGroupCheckDuplicity() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ApplicationDtoRequest jsonData = objectMapper.readValue(getClass().getClassLoader().getResourceAsStream("application-form.json"), ApplicationDtoRequest.class);
+
+        danceGroupRepository.save(DanceGroupMapper.danceGroupToEtity(jsonData));
+        DanceGroup danceGroup = danceGroupRepository.findAll().get(0);
+
+        ApplicationForm applicationForm = applicationService.createApplicationForm(jsonData);
+        assertEquals(danceGroup.getName(), applicationForm.getDancegroup().getName());
+
     }
 }
