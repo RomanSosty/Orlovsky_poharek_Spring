@@ -1,0 +1,20 @@
+{
+      "groupName": "TKJOY",
+      "contact":  "Kateřina Šostoková",
+      "choreografiName": "Klíčov",
+      "ageCategory": "Mini",
+      "danceCategory": "Show dance",
+      "nameOfChoreografer": "Kateřina Šostoková",
+      "numOfDancer": 1,
+      "lenghtOfDance": "3:20",
+      "numOfDancerInGroup": 3,
+      "meansOfTransport": "vlak",
+      "message": "Nic dalšího",
+      "members": [{
+        "id": 0,
+        "name": "Roman",
+        "lastName": "Šostok",
+        "dateOfBirth": "2020-01-01"
+      }
+      ]
+    }
