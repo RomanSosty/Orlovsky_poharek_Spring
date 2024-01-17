@@ -5,10 +5,7 @@ import org.example.jatspring.entity.ApplicationForm;
 import org.example.jatspring.service.ApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/form")
@@ -19,7 +16,7 @@ public class ApplicationController {
         this.applicationService = applicationService;
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<ApplicationForm> saveApplicationForm(@RequestBody ApplicationDtoRequest request){
         ApplicationForm applicationForm = applicationService.createApplicationForm(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(applicationForm);
