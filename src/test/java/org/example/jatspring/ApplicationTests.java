@@ -37,7 +37,6 @@ public class ApplicationTests {
 
         ResponseEntity<ApplicationForm> applicationForm = applicationController.saveApplicationForm(jsonData);
         assertEquals(HttpStatus.CREATED, applicationForm.getStatusCode());
-
     }
 
     @Transactional
