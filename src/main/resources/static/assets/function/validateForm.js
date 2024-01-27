@@ -124,5 +124,5 @@ function confirmForm(applicationForm) {
       .catch((error) => localStorage.setItem("error", error.message));
   }
 
- // form.submit();
+  form.submit();
 }
