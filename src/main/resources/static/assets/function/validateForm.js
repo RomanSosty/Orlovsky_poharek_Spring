@@ -9,7 +9,26 @@ form.addEventListener("submit", function (event) {
 });
 
 document.getElementById("login").addEventListener("click", function () {
-      window.location.href = "loginPage.html";
+
+  const targetUrl = "http://localhost:8080/loginPage";
+
+  fetch(targetUrl, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+      .then(response => {
+
+        if (response.ok) {
+          window.location.href = targetUrl;
+        } else {
+          console.error("Chyba při odesílání GET požadavku");
+        }
+      })
+      .catch(error => {
+        console.error("Chyba při odesílání GET požadavku", error);
+      });
 });
 
 function validateForm() {
@@ -99,7 +118,7 @@ function confirmForm(applicationForm) {
   if (isConfirmed) {
     localStorage.setItem("ApplicationForm", JSON.stringify(applicationForm));
 
-    fetch("http://localhost:8080/form", {
+    fetch("http://localhost:8080/form/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

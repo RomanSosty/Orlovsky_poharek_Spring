@@ -5,6 +5,8 @@ import org.example.jatspring.entity.ApplicationForm;
 import org.example.jatspring.service.ApplicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +18,7 @@ public class ApplicationController {
         this.applicationService = applicationService;
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<ApplicationForm> saveApplicationForm(@RequestBody ApplicationDtoRequest request){
         ApplicationForm applicationForm = applicationService.createApplicationForm(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(applicationForm);
