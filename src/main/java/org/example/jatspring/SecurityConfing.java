@@ -32,12 +32,9 @@ public class SecurityConfing {
     @Bean
     public UserDetailsService userDetailsService() {
 
-        UserDetails peter = User.builder().username("roman").password(passwordEncoder().encode("roman@123")).roles("USER")
-                .build();
-
         UserDetails admin = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles("ADMIN")
                 .build();
-        return new InMemoryUserDetailsManager(peter,admin);
+        return new InMemoryUserDetailsManager(admin);
     }
 
 }

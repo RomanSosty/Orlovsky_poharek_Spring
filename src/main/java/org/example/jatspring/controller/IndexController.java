@@ -12,8 +12,9 @@ public class IndexController {
     public String home() {
         return "index";
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/loginPage")
+    @PreAuthorize("hasRole('ADMIN')")
     public String endpoint() {
         return "loginPage";
     }
