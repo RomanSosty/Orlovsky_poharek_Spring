@@ -2,6 +2,8 @@ package org.example.jatspring.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +15,8 @@ public class Member {
     private String name;
     private String lastName;
     private String dateOfBirth;
+    @Transient
+    private Integer age;
     @ManyToMany
     @JoinTable(
             name = "member_dance",
@@ -59,5 +63,13 @@ public class Member {
 
     public void setDances(Set<Dance> dances) {
         this.dances = dances;
+    }
+
+    public Integer getAge() {
+        return Period.between(LocalDate.parse(this.dateOfBirth), LocalDate.now()).getYears();
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }
