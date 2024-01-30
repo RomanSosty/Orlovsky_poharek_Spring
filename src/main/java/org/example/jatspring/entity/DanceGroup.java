@@ -1,5 +1,6 @@
 package org.example.jatspring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class DanceGroup {
     private String name;
     private int numOfDancer;
     @OneToMany(mappedBy = "dancegroup", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<ApplicationForm> applicationForms = new ArrayList<>();
 
     public Long getId() {

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -45,15 +46,11 @@ public class ApplicationServiceImpl implements ApplicationService {
             members.add(member);
         });
 
-        DanceGroup danceGroup;
-        List<DanceGroup> danceGroups = danceGroupRepository.duplicityDanceGroup(request.groupName());
-
-        if(danceGroups.isEmpty()){
-            danceGroup = DanceGroupMapper.danceGroupToEtity(request);
-            danceGroupRepository.save(danceGroup);
-        }else{
-            danceGroup = danceGroups.get(0);
-        }
+        DanceGroup danceGroup = danceGroupRepository.findByName(request.groupName())
+                .orElseGet(() -> {
+                    DanceGroup newDanceGroup = DanceGroupMapper.danceGroupToEtity(request);
+                    return danceGroupRepository.save(newDanceGroup);
+                });
 
         Dance dance = DanceMapper.danceToEntity(request, members);
         danceRepository.save(dance);

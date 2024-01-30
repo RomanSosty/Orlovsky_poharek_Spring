@@ -1,5 +1,6 @@
 package org.example.jatspring.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,7 @@ import jakarta.persistence.*;
         private Dance dance;
         @ManyToOne
         @JoinColumn(name = "danceGroup_Id")
+        @JsonIgnore
         private DanceGroup dancegroup;
 
        public Long getId() {
