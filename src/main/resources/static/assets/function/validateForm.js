@@ -10,7 +10,7 @@ form.addEventListener("submit", function (event) {
 
 document.getElementById("login").addEventListener("click", function () {
 
-  const targetUrl = "http://localhost:8080/loginPage";
+  const targetUrl = "http://localhost:8080/adminPage";
 
   fetch(targetUrl, {
     method: "GET",
