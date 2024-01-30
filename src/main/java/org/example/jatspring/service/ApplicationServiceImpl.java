@@ -63,4 +63,9 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         return applicationForm;
     }
+
+    @Override
+    public List<ApplicationForm> getAllForms() {
+        return applicationFormRepository.findAll();
+    }
 }
