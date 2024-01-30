@@ -17,10 +17,9 @@ public class ApplicationController {
     public ApplicationController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
-
     @PostMapping("/save")
-    public ResponseEntity<ApplicationForm> saveApplicationForm(@RequestBody ApplicationDtoRequest request){
-        ApplicationForm applicationForm = applicationService.createApplicationForm(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(applicationForm);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApplicationForm saveApplicationForm(@RequestBody ApplicationDtoRequest request){
+        return applicationService.createApplicationForm(request);
     }
 }

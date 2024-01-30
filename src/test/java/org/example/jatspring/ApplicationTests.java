@@ -1,5 +1,6 @@
 package org.example.jatspring;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -35,8 +36,8 @@ public class ApplicationTests {
         ObjectMapper objectMapper = new ObjectMapper();
         ApplicationDtoRequest jsonData = objectMapper.readValue(getClass().getClassLoader().getResourceAsStream("application-form.json"), ApplicationDtoRequest.class);
 
-        ResponseEntity<ApplicationForm> applicationForm = applicationController.saveApplicationForm(jsonData);
-        assertEquals(HttpStatus.CREATED, applicationForm.getStatusCode());
+       ApplicationForm applicationForm = applicationController.saveApplicationForm(jsonData);
+       assertNotNull(applicationForm);
     }
 
     @Transactional
