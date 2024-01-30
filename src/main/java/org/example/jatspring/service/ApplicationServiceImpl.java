@@ -46,6 +46,10 @@ public class ApplicationServiceImpl implements ApplicationService {
             members.add(member);
         });
 
+        if(request.numOfDancer() != members.size()){
+            throw new IllegalStateException("Nesouhlasí počet členů");
+        }
+
         DanceGroup danceGroup = danceGroupRepository.findByName(request.groupName())
                 .orElseGet(() -> {
                     DanceGroup newDanceGroup = DanceGroupMapper.danceGroupToEtity(request);
