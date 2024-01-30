@@ -16,6 +16,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfing {
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -26,7 +27,11 @@ public class SecurityConfing {
         http.csrf().disable().authorizeHttpRequests((authorize) -> {
             authorize.requestMatchers("/loginPage").authenticated()
                     .anyRequest().permitAll();
-        }).httpBasic(Customizer.withDefaults());
+        }).httpBasic(Customizer.withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll());
         return http.build();
     }
     @Bean
